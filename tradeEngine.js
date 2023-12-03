@@ -212,8 +212,8 @@ class Servant {
 
 
     updateConditions(entryPrice, leverage, isLongPosition) {
-        const takeProfitPercentage = 0.05; // 0.5%
-        const stopLossPercentage = 0.035; // 0.35%
+        const takeProfitPercentage = 0.025; // 0.5%
+        const stopLossPercentage = 0.015; // 0.35%
 
         let takeProfitPrice, stopLossPrice;
 
