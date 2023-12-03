@@ -60,7 +60,7 @@ class Servant {
                             this.tradeProgress = false;
                             this.trade = true;
                             this.tradeSide = 'long';
-                            this.updateConditions(price, this.leverage, true)
+                            this.updateConditions(price, this.leverage, false,5,1.5)
                             this.tradeQuantity = _trade.origQty;
                         }
                     } else if (this.lastSignal === 'short' && !this.tradeProgress) {
@@ -72,7 +72,7 @@ class Servant {
                             this.tradeProgress = false;
                             this.trade = true;
                             this.tradeSide = 'short';
-                            this.updateConditions(price, this.leverage, false)
+                            this.updateConditions(price, this.leverage, false,5,1.5)
                             this.tradeQuantity = _trade.origQty;
                         }
                     }
@@ -210,26 +210,25 @@ class Servant {
         this.lastSignalTime = Date.now();
     }
 
-
-    updateConditions(entryPrice, leverage, isLongPosition) {
-        const takeProfitPercentage = 0.025; // 0.5%
-        const stopLossPercentage = 0.015; // 0.35%
-
+     updateConditions(entryPrice, leverage, isLongPosition, takeProfitPercentage, stopLossPercentage) {
         let takeProfitPrice, stopLossPrice;
-
+    
+        // Adjust the percentages based on leverage
+        let adjustedTakeProfitPercentage = takeProfitPercentage / leverage;
+        let adjustedStopLossPercentage = stopLossPercentage / leverage;
+    
         if (isLongPosition) {
-            takeProfitPrice = entryPrice * (1 + takeProfitPercentage / leverage);
-            stopLossPrice = entryPrice * (1 - stopLossPercentage / leverage);
+            // For a long position
+            takeProfitPrice = entryPrice * (1 + (adjustedTakeProfitPercentage / 100));
+            stopLossPrice = entryPrice * (1 - (adjustedStopLossPercentage / 100));
         } else {
-            takeProfitPrice = entryPrice * (1 - takeProfitPercentage / leverage);
-            stopLossPrice = entryPrice * (1 + stopLossPercentage / leverage);
+            // For a short position
+            takeProfitPrice = entryPrice * (1 - (adjustedTakeProfitPercentage / 100));
+            stopLossPrice = entryPrice * (1 + (adjustedStopLossPercentage / 100));
         }
-
-        this.TP = takeProfitPrice;
-        this.SL = stopLossPrice;
-
-        console.log(`Take Profit Price: ${takeProfitPrice}`);
-        console.log(`Stop Loss Price: ${stopLossPrice}`);
+    
+        console.log(`Take Profit Price: ${takeProfitPrice.toFixed(2)}`);
+        console.log(`Stop Loss Price: ${stopLossPrice.toFixed(2)}`);
     }
 
 
