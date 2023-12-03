@@ -81,7 +81,7 @@ class Servant {
                     console.log(this.getDetails);
                 }
             } else {
-               console.log(this.getDetails);
+                console.log(this.getDetails);
                 // return
                 if (this.tradeSide === 'long') {
                     if (price >= this.TP && !this.tradeProgress) {
