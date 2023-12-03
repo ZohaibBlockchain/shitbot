@@ -28,7 +28,7 @@ class Servant {
 
 
     get getDetails() {
-        return `Name: ${this.name}, Symbol: ${this.symbol}, Speed: ${(this.speed) / 1000}PS, TP: ${this.TP}, SL: ${this.SL}, LastSignal: ${this.lastSignal}, TradeQuantity: ${this.tradeQuantity}, Precision: ${this.maxPrecision}`;
+        return `Name: ${this.name}, Symbol: ${this.symbol}, Speed: ${(this.speed) / 1000}PS, TP: ${this.TP}, SL: ${this.SL}, LastSignal: ${this.lastSignal}, TradeQuantity: ${this.tradeQuantity}, Precision: ${this.maxPrecision}, TotalTrades: ${this.totalTrades}, TotalProfit: ${this.totalProfit}, totalLostTrades: ${this.lostTrades}`;
     }
 
     async heart() {
@@ -81,6 +81,7 @@ class Servant {
                     console.log(this.getDetails);
                 }
             } else {
+                this.getDetails();
                 // return
                 if (this.tradeSide === 'long') {
                     if (price >= this.TP && !this.tradeProgress) {
