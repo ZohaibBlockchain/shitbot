@@ -97,6 +97,7 @@ class Servant {
                             this.tradeSide = undefined;
                             this.TP = undefined;
                             this.SL = undefined;
+                            this.tradeQuantity = 0;
                         }
 
                     } else if (price <= this.SL && this.lastSignal === 'short' && !this.tradeProgress) {
@@ -112,6 +113,7 @@ class Servant {
                             this.tradeSide = undefined;
                             this.TP = undefined;
                             this.SL = undefined;
+                            this.tradeQuantity = 0;
                         }
                     }
 
@@ -129,6 +131,7 @@ class Servant {
                             this.tradeSide = undefined;
                             this.TP = undefined;
                             this.SL = undefined;
+                            this.tradeQuantity = 0;
                         }
 
                     } else if (price >= this.SL && this.lastSignal === 'long' && !this.tradeProgress) {
@@ -144,6 +147,7 @@ class Servant {
                             this.tradeSide = undefined;
                             this.TP = undefined;
                             this.SL = undefined;
+                            this.tradeQuantity = 0;
                         }
                     }
                 }
