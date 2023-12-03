@@ -60,7 +60,7 @@ class Servant {
                             this.tradeProgress = false;
                             this.trade = true;
                             this.tradeSide = 'long';
-                            this.updateConditions(price, this.leverage, false,5,1.5)
+                            this.updateConditions(price, this.leverage, false, 5, 1.5)
                             this.tradeQuantity = _trade.origQty;
                         }
                     } else if (this.lastSignal === 'short' && !this.tradeProgress) {
@@ -72,7 +72,7 @@ class Servant {
                             this.tradeProgress = false;
                             this.trade = true;
                             this.tradeSide = 'short';
-                            this.updateConditions(price, this.leverage, false,5,1.5)
+                            this.updateConditions(price, this.leverage, false, 5, 1.5)
                             this.tradeQuantity = _trade.origQty;
                         }
                     }
@@ -176,7 +176,7 @@ class Servant {
             for (let market of markets) {
                 let obj = position_data[market], size = Number(obj.positionAmt);
                 if (size == 0) {
-                }else{
+                } else {
                     this.state = 'Dead';
                     throw 'Trade Found remove all trades to start the bot'; // This will reject the promise with the caught error
                 }
@@ -214,13 +214,13 @@ class Servant {
         this.lastSignalTime = Date.now();
     }
 
-     updateConditions(entryPrice, leverage, isLongPosition, takeProfitPercentage, stopLossPercentage) {
+    updateConditions(entryPrice, leverage, isLongPosition, takeProfitPercentage, stopLossPercentage) {
         let takeProfitPrice, stopLossPrice;
-    
+
         // Adjust the percentages based on leverage
         let adjustedTakeProfitPercentage = takeProfitPercentage / leverage;
         let adjustedStopLossPercentage = stopLossPercentage / leverage;
-    
+
         if (isLongPosition) {
             // For a long position
             takeProfitPrice = entryPrice * (1 + (adjustedTakeProfitPercentage / 100));
@@ -230,7 +230,10 @@ class Servant {
             takeProfitPrice = entryPrice * (1 - (adjustedTakeProfitPercentage / 100));
             stopLossPrice = entryPrice * (1 + (adjustedStopLossPercentage / 100));
         }
-    
+
+
+        this.TP = takeProfitPrice.toFixed(2);
+        this.SL = stopLossPrice.toFixed(2);
         console.log(`Take Profit Price: ${takeProfitPrice.toFixed(2)}`);
         console.log(`Stop Loss Price: ${stopLossPrice.toFixed(2)}`);
     }
