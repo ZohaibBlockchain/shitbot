@@ -1,5 +1,5 @@
 class Servant {
-    constructor(name, speed, binanceClient, leverage, state, amountInUSDT) {
+    constructor(name, speed, binanceClient, leverage, state, amountInUSDT,takeProfitPercentage,StopLossPercentage) {
         this.name = name;
         this.symbol = process.env.INSTRUMENT;
         this.speed = speed;
@@ -13,6 +13,8 @@ class Servant {
         this.lastSignal = undefined;
         this.TP = undefined;
         this.SL = undefined;
+        this.takeProfitPercentage = takeProfitPercentage;
+        this.stopLossPercentage = stopLossPercentage;
         this.amountInUSDT = amountInUSDT;
         this.tradeProgress = false;
         this.tradeQuantity = 0;
@@ -60,7 +62,7 @@ class Servant {
                             this.tradeProgress = false;
                             this.trade = true;
                             this.tradeSide = 'long';
-                            this.updateConditions(price, this.leverage, true, 15, 5)
+                            this.updateConditions(price, this.leverage, true, this.takeProfitPercentage, this.stopLossPercentage)
                             this.tradeQuantity = _trade.origQty;
                         }
                     } else if (this.lastSignal === 'short' && !this.tradeProgress) {
@@ -72,7 +74,7 @@ class Servant {
                             this.tradeProgress = false;
                             this.trade = true;
                             this.tradeSide = 'short';
-                            this.updateConditions(price, this.leverage, false, 15, 5)
+                            this.updateConditions(price, this.leverage, false, this.takeProfitPercentage, this.stopLossPercentage)
                             this.tradeQuantity = _trade.origQty;
                         }
                     }
