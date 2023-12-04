@@ -25,6 +25,7 @@ class Servant {
         this.tradeExists(); //First check
         this.setLeverage(); //Second check
         this.heart();
+        this.counter = 0;
     }
 
 
@@ -79,12 +80,25 @@ class Servant {
                         }
                     }
                 } else {
-                    console.log('waiting for Signals')
-                    console.log(this.getDetails);
+                    if(this.counter >= 10)
+                    {
+                        console.log('waiting for Signals')
+                        console.log(this.getDetails);
+                        this.counter = 0;
+                    }else{
+                        this.counter++;
+                    }
                 }
             } else {
-                console.log(this.getDetails);
-                // return
+               
+                if(this.counter >= 10)
+                {
+                    console.log('waiting for Opportunity to make Profit')
+                    console.log(this.getDetails);
+                    this.counter = 0;
+                }else{
+                    this.counter++;
+                }
                 if (this.tradeSide === 'long') {
                     if (price >= this.TP && !this.tradeProgress) {
                         //close Trade
@@ -102,7 +116,7 @@ class Servant {
                             this.tradeQuantity = 0;
                         }
 
-                    } else if (price <= this.SL && this.lastSignal === 'short' && !this.tradeProgress) {
+                    } else if (price <= this.SL && !this.tradeProgress) {
 
                         this.tradeProgress = true;
                         const _trade = await this.binance.futuresMarketSell(this.symbol, this.tradeQuantity);
@@ -136,7 +150,7 @@ class Servant {
                             this.tradeQuantity = 0;
                         }
 
-                    } else if (price >= this.SL && this.lastSignal === 'long' && !this.tradeProgress) {
+                    } else if (price >= this.SL && !this.tradeProgress) {
 
                         this.tradeProgress = true;
                         const _trade = await this.binance.futuresMarketBuy(this.symbol, this.tradeQuantity);
