@@ -14,7 +14,7 @@ class Servant {
         this.TP = undefined;
         this.SL = undefined;
         this.takeProfitPercentage = takeProfitPercentage;
-        this.stopLossPercentage = stopLossPercentage;
+        this.stopLossPercentage = StopLossPercentage;
         this.amountInUSDT = amountInUSDT;
         this.tradeProgress = false;
         this.tradeQuantity = 0;
