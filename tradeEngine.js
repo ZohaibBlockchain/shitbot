@@ -44,10 +44,7 @@ class Servant {
             return;
         }
         else {
-            console.clear();
-            console.log('...');
             const price = await this.getPrice();
-
             if (!this.trade)//create new trade
             {
                 if (((Date.now() - this.lastSignalTime) / 1000) < 5) {
