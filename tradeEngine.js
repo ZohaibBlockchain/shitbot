@@ -58,6 +58,7 @@ class Servant {
                         const quantity = (((this.amountInUSDT - 1) / price) * this.leverage).toFixed(this.maxPrecision);
                         const _trade = await this.binance.futuresMarketBuy(this.symbol, quantity);
                         console.log(_trade, ' ', this.symbol, quantity);
+                        console.log(price);
                         if (_trade.origQty === (quantity).toString()) {
                             console.log('Trade Started');
                             this.tradeProgress = false;
@@ -67,6 +68,7 @@ class Servant {
                             this.tradeQuantity = _trade.origQty;
                         }
                     } else if (this.lastSignal === 'short' && !this.tradeProgress) {
+                        console.log(price);
                         this.tradeProgress = true;
                         const quantity = (((this.amountInUSDT - 1) / price) * this.leverage).toFixed(this.maxPrecision);
                         const _trade = await this.binance.futuresMarketSell(this.symbol, quantity);
@@ -105,6 +107,7 @@ class Servant {
                         this.tradeProgress = true;
                         const _trade = await this.binance.futuresMarketSell(this.symbol, this.tradeQuantity);
                         if (_trade.origQty === (this.tradeQuantity).toString()) {
+                            console.log(price);
                             console.log('Trade Closed in profit');
                             this.totalTrades++;
                             this.protiableTrades++;
@@ -117,9 +120,10 @@ class Servant {
                         }
 
                     } else if (price <= this.SL && !this.tradeProgress) {
-
+                        console.log(price);
                         this.tradeProgress = true;
                         const _trade = await this.binance.futuresMarketSell(this.symbol, this.tradeQuantity);
+                        console.log(price);
                         if (_trade.origQty === (this.tradeQuantity).toString()) {
                             console.log('Trade Closed in Loss');
                             this.totalTrades++;
@@ -138,6 +142,7 @@ class Servant {
                     if (price <= this.TP && !this.tradeProgress) {
                         this.tradeProgress = true;
                         const _trade = await this.binance.futuresMarketBuy(this.symbol, this.tradeQuantity);
+                        console.log(price);
                         if (_trade.origQty === (this.tradeQuantity).toString()) {
                             console.log('Trade Closed in profit');
                             this.totalTrades++;
@@ -154,6 +159,7 @@ class Servant {
 
                         this.tradeProgress = true;
                         const _trade = await this.binance.futuresMarketBuy(this.symbol, this.tradeQuantity);
+                        console.log(price);
                         if (_trade.origQty === (this.tradeQuantity).toString()) {
                             console.log('Trade Closed in Loss');
                             this.totalTrades++;
@@ -179,7 +185,7 @@ class Servant {
                     console.error(error);
                     reject(error);
                 } else {
-                    console.log("Price:", ticker[this.symbol]);
+                    // console.log("Price:", ticker[this.symbol]);
                     resolve(ticker[this.symbol]);
                 }
             });
