@@ -58,7 +58,7 @@ class Servant {
                         const _trade = await this.binance.futuresMarketBuy(this.symbol, quantity);
                         console.log(_trade, ' ', this.symbol, quantity);
                         if (_trade.origQty === (quantity).toString()) {
-                            console.log('Trade Completed');
+                            console.log('Trade Started');
                             this.tradeProgress = false;
                             this.trade = true;
                             this.tradeSide = 'long';
@@ -70,7 +70,7 @@ class Servant {
                         const quantity = (((this.amountInUSDT - 1) / price) * this.leverage).toFixed(this.maxPrecision);
                         const _trade = await this.binance.futuresMarketSell(this.symbol, quantity);
                         if (_trade.origQty === (quantity).toString()) {
-                            console.log('Trade Completed');
+                            console.log('Trade Started');
                             this.tradeProgress = false;
                             this.trade = true;
                             this.tradeSide = 'short';
