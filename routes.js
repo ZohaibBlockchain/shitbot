@@ -9,7 +9,7 @@ const binance = new Binance().options({
   APISECRET: process.env.SKEY
 });
 
-let worker = new Servent('Main', 1000, binance, 15, 'init', 90,20,7.5)
+let worker = new Servent('Main', 1000, binance, 15, 'init', 90,7.5,3)
 
 
 router.get('*', (req, res) => {
