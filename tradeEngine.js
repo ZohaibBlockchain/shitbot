@@ -49,7 +49,7 @@ class Servant {
             if (!this.trade)//create new trade
             {
                 if (((Date.now() - this.lastSignalTime) / 1000) < 5) {
-                    if (this.lastSignal === 'long' && this.HelperSignal === 'long' &&!this.tradeProgress) {
+                    if (this.lastSignal === 'long' &&!this.tradeProgress) {
                         this.tradeProgress = true;
                         // this.maxPrecision = await this.getPrecisionForPair(this.symbol);
 
@@ -65,7 +65,7 @@ class Servant {
                             this.updateConditions(price, this.leverage, true, this.takeProfitPercentage, this.stopLossPercentage)
                             this.tradeQuantity = _trade.origQty;
                         }
-                    } else if (this.lastSignal === 'short' && this.HelperSignal === 'short' && !this.tradeProgress) {
+                    } else if (this.lastSignal === 'short' && !this.tradeProgress) {
                         console.log(price);
                         this.tradeProgress = true;
                         const quantity = (((this.amountInUSDT - 1) / price) * this.leverage).toFixed(this.maxPrecision);
