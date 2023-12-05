@@ -19,10 +19,10 @@ router.get('*', (req, res) => {
 
 router.post('/signal', (req, res) => {
   try {
-    const { signal,helperSignal } = req.body;
-    console.log(signal,helperSignal);
+    const { signal } = req.body;
+    console.log(signal,0);
     // Assuming worker.updateSignal is a valid function
-    worker.updateSignal(signal,helperSignal);
+    worker.updateSignal(signal,'0');
     // Send a response back to the client
     res.status(200).send('Signal received');
   } catch (error) {
