@@ -9,7 +9,7 @@ const binance = new Binance().options({
   APISECRET: process.env.SKEY
 });
 
-let worker = new Servent('Main', 1000, binance, 15, 'init', 40,7.5,3.5)
+let worker = new Servent('Main', 1000, binance, 15, 'init', 40,7.5,5)
 
 
 router.get('*', (req, res) => {
@@ -19,10 +19,10 @@ router.get('*', (req, res) => {
 
 router.post('/signal', (req, res) => {
   try {
-    const { signal } = req.body;
-    console.log(signal);
+    const { signal,helperSignal } = req.body;
+    console.log(signal,helperSignal);
     // Assuming worker.updateSignal is a valid function
-    worker.updateSignal(signal);
+    worker.updateSignal(signal,helperSignal);
     // Send a response back to the client
     res.status(200).send('Signal received');
   } catch (error) {
